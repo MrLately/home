@@ -143,3 +143,4 @@ git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
 cd "Pi-hole/automated install/"
 sudo bash basic-install.sh
 
+echo "Setup complete. Visit http://${IP_ADDRESS}:5000 in your browser to access the web application."
