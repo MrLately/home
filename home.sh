@@ -120,6 +120,10 @@ systemctl daemon-reload
 systemctl enable filebrowser.service
 systemctl start filebrowser.service
 
+echo "owning nas..."
+sudo chown -R pi:pi /mnt/nas
+sudo chmod -R 775 /mnt/nas
+
 echo "Installing Pi-hole..."
 git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
 cd "Pi-hole/automated install/"
