@@ -76,7 +76,21 @@ source /home/pi/pi-service-dashboard/venv/bin/activate
 pip install Flask psutil
 deactivate
 
-ServiceFile="/etc/systemd/system/homepage.service"
+# Update the configuration with the Raspberry Pi's IP address
+echo "Updating configuration with Raspberry Pi's IP address..."
+apt-get install jq -y  # Ensure jq is installed
+IP_ADDRESS=$(hostname -I | awk '{print $1}')
+CONFIG_FILE="/home/pi/pi-service-dashboard/home_os/config.json"
+
+jq --arg ip "$IP_ADDRESS" '
+    (.services[] | select(.name=="Plex") | .url)="http://\($ip):32400/web" |
+    (.services[] | select(.name=="Files") | .url)="https://\($ip)" |
+    (.services[] | select(.name=="Pi-hole") | .url)="http://\($ip)/admin"
+' $CONFIG_FILE > temp.json && mv temp.json $CONFIG_FILE
+
+echo "Configuration updated with IP: $IP_ADDRESS"
+
+# Create the systemd service file for the homepage service
 echo "Creating systemd service file at $ServiceFile"
 cat > $ServiceFile << EOF
 [Unit]
