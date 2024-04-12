@@ -138,6 +138,13 @@ echo "owning nas..."
 sudo chown -R pi:pi /mnt/nas
 sudo chmod -R 775 /mnt/nas
 
+echo "Creating commonly used directories within NAS..."
+mkdir -p /mnt/nas/photos
+mkdir -p /mnt/nas/movies
+mkdir -p /mnt/nas/series
+mkdir -p /mnt/nas/music
+mkdir -p /mnt/nas/documents
+
 echo "Installing Pi-hole..."
 git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
 cd "Pi-hole/automated install/"
