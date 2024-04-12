@@ -92,6 +92,8 @@ echo "Configuration updated with IP: $IP_ADDRESS"
 
 # Create the systemd service file for the homepage service
 echo "Creating systemd service file at $ServiceFile"
+# Define the path to the systemd service file
+ServiceFile="/etc/systemd/system/homepage.service"
 cat > $ServiceFile << EOF
 [Unit]
 Description=Home Page Service
@@ -149,5 +151,7 @@ echo "Installing Pi-hole..."
 git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
 cd "Pi-hole/automated install/"
 sudo bash basic-install.sh
+
+sudo chown -R pi:pi /home/pi/pi-service-dashboard
 
 echo "Setup complete. Visit http://${IP_ADDRESS}:5000 in your browser to access the web application."
